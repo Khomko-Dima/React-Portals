@@ -6,16 +6,15 @@ function copyStyles(sourceDoc, targetDoc) {
         (styleSheet) => !styleSheet.href || styleSheet.href.startsWith(window.location.origin)
     );
     styleSheets.forEach(styleSheet => {
-        if (styleSheet.cssRules) { // for <style> elements
+        if (styleSheet.cssRules) {
             const newStyleEl = sourceDoc.createElement('style');
 
             Array.from(styleSheet.cssRules).forEach(cssRule => {
-                // write the text of each rule into the body of the style element
                 newStyleEl.appendChild(sourceDoc.createTextNode(cssRule.cssText));
             });
 
             targetDoc.head.appendChild(newStyleEl);
-        } else if (styleSheet.href) { // for <link> elements loading CSS from a URL
+        } else if (styleSheet.href) {
             const newLinkEl = sourceDoc.createElement('link');
 
             newLinkEl.rel = 'stylesheet';
